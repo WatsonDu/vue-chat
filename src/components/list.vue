@@ -19,7 +19,7 @@
     <div class="list">
         <ul>
             <li v-for="item in sessions" :class="{active:item.id === currentSessionId}" @click="changeCurrentSessionId(item.id)">
-                <img class="avatar" :src="item.user.img" alt="" width="30" height="30">
+                <img class="avatar" :src="item.user.img" alt="" width="40" height="40">
                 <p class="name">{{item.user.name}}</p>
             </li>
         </ul>

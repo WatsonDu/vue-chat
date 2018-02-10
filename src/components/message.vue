@@ -4,7 +4,7 @@
       name:'message',
       data(){
         return {
-            img:'../src/assets/3.jpg'
+            img:'../../static/1.jpg'
         }
       },
       computed:mapState(['sessions','currentSessionId']),

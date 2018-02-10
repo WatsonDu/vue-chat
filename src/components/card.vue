@@ -6,7 +6,7 @@
             return{
                 user:{
                     name:'watsonDu',
-                    img:'../assets/1.jpg'
+                    img:'../static/1.jpg'
                 }
             }
         },
@@ -45,8 +45,8 @@
 
         .avatar{
             border-radius:2px;
-          width:40px;
-          height:40px;
+          width:60px;
+          height:60px;
         }
 
         .name{
@@ -66,6 +66,7 @@
             border-radius: 4px;
             outline: none;
             background-color: #26292E;
+            margin-top:10px;
         }
     }
 </style>

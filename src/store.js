@@ -10,7 +10,7 @@ const store = new Vuex.Store({
         id:1,
         user:{
           name:'示例介绍',
-          img:'../src/assets/2.jpg'
+          img:'../../static/2.jpg'
         },
         messages:[
           {
@@ -27,7 +27,7 @@ const store = new Vuex.Store({
         id:2,
         user:{
           name:'dog',
-          img:'../src/assets/3.jpg'
+          img:'../static/3.jpg'
         },
         messages:[]
       },
@@ -35,7 +35,7 @@ const store = new Vuex.Store({
         id:3,
         user:{
           name:'Cat',
-          img:'../src/assets/4.jpg'
+          img:'../static/4.jpg'
         },
         messages:[]
       }
