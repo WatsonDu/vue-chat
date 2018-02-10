@@ -6,7 +6,7 @@
             return{
                 user:{
                     name:'watsonDu',
-                    img:'../src/assets/1.jpg'
+                    img:'../assets/1.jpg'
                 }
             }
         },
