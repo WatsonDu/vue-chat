@@ -1,18 +1,16 @@
 <script>
-  import {actions} from '../store'
+  import {mapState} from 'vuex'
   export default{
-      vuex:{
-        actions:actions,
-      },
+     name:'test',
     data(){
           return{
               content:''
           };
     },
     methods: {
-      onKeyup (e) {
+      addMessage (e) {
         if (e.ctrlKey && e.keyCode === 13 && this.content.length) {
-          this.sendMessage(this.content);
+          this.$store.commit('addMessage', this.content);
           this.content = '';
         }
       }
@@ -22,7 +20,7 @@
 
 <template>
     <div class="test">
-        <textarea placeholder="按 Ctrl + Enter 发送" v-model="content" @keyup="onKeyup"></textarea>
+        <textarea placeholder="按 Ctrl + Enter 发送" v-model="content" @keyup="addMessage"></textarea>
     </div>
 </template>
 

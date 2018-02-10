@@ -1,17 +1,16 @@
 <script>
-  import {actions} from '../store';
+  import {mapState} from 'vuex';
   export default {
-      vuex:{
-        actions:actions,
-        getters:{
-          sessions:({sessions,filterKey}) => {
-            let result = sessions.filter(session => session.user.name.includes(filterKey));
-            return result;
-          },
-          currentId:({currentSessionId}) => currentSessionId
-        }
+      name:'list',
+      data(){
+          return {}
+      },
+      computed:mapState(['sessions','currentSessionId']),
+      methods:{
+          changeCurrentSessionId(id){
+              this.$store.commit('changeCurrentSessionId',id)
+          }
       }
-
   }
 
 
@@ -19,8 +18,8 @@
 <template>
     <div class="list">
         <ul>
-            <li v-for="item in sessions" :class="{active:item.id === currentId}" @click="selectSession(item.id)">
-                <img class="avatar" :src="item.user.img" :alt="item.user.name" width="30" height="30">
+            <li v-for="item in sessions" :class="{active:item.id === currentSessionId}" @click="changeCurrentSessionId(item.id)">
+                <img class="avatar" :src="item.user.img" alt="" width="30" height="30">
                 <p class="name">{{item.user.name}}</p>
             </li>
         </ul>
@@ -29,6 +28,9 @@
 
 <style lang="less" scoped>
     .list{
+    ul{
+      list-style-type: none;
+    }
         li{
             padding:12px 15px;
             border-bottom:1px solid #292c33;
@@ -38,7 +40,7 @@
         .avatar,.name{
             vertical-align:middle;
         }
-        .avatat{
+        .avatar{
             border-radius:2px;
         }
         .name{

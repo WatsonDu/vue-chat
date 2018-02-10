@@ -1,15 +1,16 @@
 <script>
-    import {actions} from '../store'
 
     export default {
-        vuex:{
-            actions:actions,
-            getters:{
-                user:({user}) => user,
-              filterKey:({filterKey}) => filterKey,
-            },
-
+        name:'card',
+        data(){
+            return{
+                user:{
+                    name:'watsonDu',
+                    img:'../src/assets/1.jpg'
+                }
+            }
         },
+
         methods:{
             onKeyup(e){
                 this.search(e.target.value);
@@ -20,11 +21,11 @@
 <template>
     <div class="card">
         <header>
-            <img :src="user.img" :alt="user.name" class="avatar" height="40" width="40">
+            <img :src="user.img" alt="" class="avatar">
             <p class="name">{{user.name}}</p>
         </header>
         <footer>
-            <input type="text" class="search" placeholder="搜索" @keyup="onKeyup">
+            <input type="text" class="search" placeholder="搜索" v-model="$store.state.filterKey">
         </footer>
     </div>
 </template>
@@ -44,6 +45,8 @@
 
         .avatar{
             border-radius:2px;
+          width:40px;
+          height:40px;
         }
 
         .name{

@@ -4,18 +4,13 @@ Vue.use(Vuex);
 const now = new Date();
 const store = new Vuex.Store({
   state:{
-    //当前用户
-    user:{
-      name:'wang',
-      img:'dist/images/1.jpg'
-    },
     //会话列表
     sessions:[
       {
         id:1,
         user:{
           name:'示例介绍',
-          img:'dist/images/2.jpg'
+          img:'../src/assets/2.jpg'
         },
         messages:[
           {
@@ -32,7 +27,7 @@ const store = new Vuex.Store({
         id:2,
         user:{
           name:'dog',
-          img:'dist/images/3.jpg'
+          img:'../src/assets/3.jpg'
         },
         messages:[]
       },
@@ -40,7 +35,7 @@ const store = new Vuex.Store({
         id:3,
         user:{
           name:'Cat',
-          img:'dist/images/4.jpg'
+          img:'../src/assets/4.jpg'
         },
         messages:[]
       }
@@ -50,46 +45,44 @@ const store = new Vuex.Store({
     //过滤只包含这个KEY的会话
     filterKey:'',
   },
+  getters:{},
   mutations:{
+    changeCurrentSessionId(state,id){
+      state.currentSessionId = id
+    },
+    addMessage(state,message){
+      state.sessions[state.currentSessionId-1].messages.push({
+        content:message,
+        date:new Date(),
+        self:true,
+      })
+    },
     INIT_DATA(state){
       let data = localStorage.getItem('vue-chat-session');
       if(data){
         state.sessions = JSON.parse(data);
       }
+    }},
+
+    actions:{
+      initData(context){
+        context.commit('INIT_DATA')
+      }
     },
-    //发送消息
-    SEND_MESSAGE({sessions,currentSessionId},content){
-      let session = sessions.find(item => item.id === currentSessionId);
-      session.messages.push({
-        content:content,
-        date: new Date(),
-        self:true,
-      });
-    },
-    //选择会话
-    SELECT_SESSION(state,id){
-      state.currentSessionId = id;
-    },
-    //搜索
-    SET_FILTER_KEY(state,value){
-      state.filterKey = value;
-    },
-  }
-});
-store.watch(
-  (state) => state.sessions,
-  (val) => {
+
+
+  });
+  store.watch(
+  function(state){
+     return state.sessions
+  },
+  function(val){
     localStorage.setItem('vue-chat-session',JSON.stringify(val));
   },
   {
     deep:true,
   }
-);
+)
 export default store;
-export const actions = {
-  initData:({dispatch}) => dispatch('INIT_DATA'),
-  sendMessage:({dispatch},content) => dispatch('SEND_MESSAGE',content),
-  selectSession:({dispatch},id) => dispatch('SELECT_SESSION',id),
-  search:({dispatch},value) => dispatch('SET_FILTER_KEY',value),
-};
+
 

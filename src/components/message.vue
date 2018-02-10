@@ -1,40 +1,43 @@
 <script>
+  import {mapState} from 'vuex'
   export default{
-      vuex:{
-          getters:{
-              user:({user}) => user,
-              session:({sessions,currentSessionId}) => sessions.find(session => session.id ===currentSessionId)
-          }
+      name:'message',
+      data(){
+        return {
+            img:'../src/assets/3.jpg'
+        }
       },
+      computed:mapState(['sessions','currentSessionId']),
       filter:{
           time(date){
-              if(typeof date === 'string'){
+              if(date){
                   date = new Date(date);
               }
-              return date.getHours() + ':' + date.getMinutes();
+              return `${date.getHours()}:${date.getMinutes()}`;
           }
       },
       directives:{
-          'scroll-bottom'(){
-              this.vm.$nextTick(()=>{
-                  this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
-              })
+          'scroll-bottom'(el){
+              setTimeout(function(){
+                  el.scrollTop+=9999;
+              },1)
+              }
           }
       }
-  };
+
 
 </script>
 
 <template>
-    <div class="message" v-scroll-bottom="session.messages">
-        <ul v-if="session">
-            <li v-for="item in session.messages">
-                <p class=""time>
-                    <span>{{item.date | time}}</span>
+    <div class="message" v-scroll-bottom="sessions">
+        <ul v-if="currentSessionId == item.id" v-for="item in sessions">
+            <li v-for="entry in item.messages">
+                <p class="time">
+                    <span>{{entry.date | time}}</span>
                 </p>
-                <div class="main" :class="{self:item.self}">
-                <img class="avatar" width="30" height="30" :src="item.self ? user.img : session.user.img" />
-                <div class="text">{{ item.content }}</div>
+                <div class="main" :class="{self:entry.self}">
+                <img class="avatar" width="30" height="30" :src="entry.self ? img : item.user.img" />
+                <div class="text">{{ entry.content }}</div>
                 </div>
             </li>
         </ul>
@@ -46,9 +49,12 @@
 .message {
     padding: 10px 15px;
     overflow-y: scroll;
-    li {
-        margin-bottom: 15px;
-    }
+   ul{
+     list-style-type: none;
+        li {
+            margin-bottom: 15px;
+        }
+   }
     .time {
         margin: 7px 0;
         text-align: center;

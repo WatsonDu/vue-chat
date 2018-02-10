@@ -12,23 +12,23 @@
 </template>
 
 <script>
-import {actions} from './store'
 
 import Message from './components/message'
 import Card from './components/card'
 import List from './components/list'
 import Test from './components/test'
 
-export default {
 
-  vuex:{
-      actions:actions,
+export default {
+  name:'App',
+  data(){
+      return {}
   },
   components: {
     Message,Card,List,Test
   },
-  created(){
-    this.initData();
+  mounted:function(){
+      this.$store.dispatch('initData')
   }
 }
 </script>
